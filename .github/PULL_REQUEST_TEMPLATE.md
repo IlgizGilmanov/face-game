@@ -4,13 +4,6 @@
 
 ... Screenshots in case of UI changes
 
-##### Type of change
-
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Chore (updating grunt tasks etc; no production code change)
-- [ ] This change requires a documentation update
-
 ## Test plan
 
 ##### List of steps to manually test introduced functionality:
