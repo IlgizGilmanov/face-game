@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/ilgizgilmanov-98/face-game/branches/ci/badge.svg)](https://semaphoreci.com/ilgizgilmanov-98/face-game)
+
 # FaceGame
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
