@@ -11,6 +11,9 @@ blocks:
         - name: 'Job #1'
           commands:
             - yarn install
-        - name: 'Job #2'
+  - name: CI
+    task:
+      jobs:
+        - name: 'Job #1'
           commands:
             - yarn ci
