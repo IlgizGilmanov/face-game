@@ -13,7 +13,22 @@ blocks:
             - checkout
             - echo "Linting code"
             - echo "Compiling code"
-        - name: Unit tests
+  - name: Unit tests
+    task:
+      jobs:
+        - name: Unit
           commands:
             - checkout
             - echo "Running unit tests"
+  - name: E2E tests
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: Integration tests
+          commands:
+            - echo "Running integration tests"
+        - name: Performance tests
+          commands:
+            - echo "Running performance tests"
