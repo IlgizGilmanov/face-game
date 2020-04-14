@@ -16,7 +16,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:ci": "start-server-and-test start-server http-get://localhost:4200/main.js cy:ci:run",
-    "cy:ci:run": "cypress run --record --key $CYPRESS_RECORD_KEY --spec 'cypress/integration/examples/actions.spec.js'",
+    "cy:ci:run": "cypress run --record --key 8e67a327-7d3d-43ba-8198-51c4921ea522 --spec 'cypress/integration/examples/actions.spec.js'",
     "ci": "yarn lint && yarn stylelint && yarn test:ci && yarn cy:ci",
     "e2e": "ng e2e"
   },

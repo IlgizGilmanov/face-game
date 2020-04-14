@@ -52,10 +52,7 @@ blocks:
     dependencies:
       - Setup
     task:
-      env_vars:
-        - name: CYPRESS_RECORD_KEY
-          value: '8e67a327-7d3d-43ba-8198-51c4921ea522'
       jobs:
         - name: yarn run cy:ci
           commands:
-            - start-server-and-test start-server http-get://localhost:4200/main.js cypress run --record --key $CYPRESS_RECORD_KEY --spec 'cypress/integration/examples/actions.spec.js'
+            - yarn run cy:ci
