@@ -5,15 +5,15 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Setup
+  - name: Set things up
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Compile
           commands:
-            - yarn install
-  - name: CI
-    task:
-      jobs:
-        - name: 'Job #1'
+            - checkout
+            - echo "Linting code"
+            - echo "Compiling code"
+        - name: Unit tests
           commands:
-            - yarn ci
+            - checkout
+            - echo "Running unit tests"
