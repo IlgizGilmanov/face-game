@@ -58,4 +58,4 @@ blocks:
       jobs:
         - name: yarn run cy:ci
           commands:
-            - yarn run cy:ci
+            - start-server-and-test start-server http-get://localhost:4200/main.js cypress run --record --key $CYPRESS_RECORD_KEY --spec 'cypress/integration/examples/actions.spec.js'
