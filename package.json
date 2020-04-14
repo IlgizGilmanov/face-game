@@ -1,20 +1,24 @@
 {
   "name": "face-game",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "engines": {
-    "node": "10.X"
+    "node": "13.X"
   },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-server": "ng serve",
     "build": "ng build",
-    "test": "ng test",
-    "test:ci": "ng test --watch=false --progress=false --browsers=ChromeHeadless",
-    "lint": "ng lint --type-check && yarn stylelint",
+    "lint": "ng lint --type-check",
     "stylelint": "stylelint \"src/**/*.scss\" --syntax scss",
-    "ci": "yarn lint && yarn test:ci",
-    "e2e": "ng e2e",
-    "cypress:open": "cypress open"
+    "test": "ng test",
+    "test:ci": "yarn test --watch=false --progress=false --browsers=ChromeHeadless",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:ci": "cypress run --record --key 8e67a327-7d3d-43ba-8198-51c4921ea522 --spec 'cypress/integration/examples/actions.spec.js'",
+    "cy:ci": "start-server-and-test start-server http-get://localhost:4200/main.js cy:run:ci",
+    "ci": "yarn lint && yarn stylelint && yarn test:ci && yarn cy:ci",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -48,6 +52,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
+    "start-server-and-test": "^1.10.11",
     "stylelint": "^13.2.1",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.16.1",
