@@ -4,31 +4,58 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+execution_time_limit:
+  minutes: 10
+auto_cancel:
+  running:
+    when: 'true'
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - 'cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules-master'
+      - nvm use
 blocks:
-  - name: Set things up
+  - name: Setup
+    dependencies: []
     task:
       jobs:
-        - name: Compile
+        - name: yarn install and cache
           commands:
-            - checkout
-            - echo "Linting code"
-            - echo "Compiling code"
-  - name: Unit tests
+            - yarn
+            - cache store node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum yarn.lock) node_modules
+  - name: Lint
+    dependencies:
+      - Setup
     task:
       jobs:
-        - name: Unit
+        - name: yarn run lint
           commands:
-            - checkout
-            - echo "Running unit tests"
-  - name: E2E tests
+            - yarn run lint
+  - name: Stylelint
+    dependencies:
+      - Setup
     task:
-      prologue:
-        commands:
-          - checkout
       jobs:
-        - name: Integration tests
+        - name: yarn run stylelint
           commands:
-            - echo "Running integration tests"
-        - name: Performance tests
+            - yarn run stylelint
+  - name: Tests
+    dependencies:
+      - Setup
+    task:
+      jobs:
+        - name: yarn run test:ci
           commands:
-            - echo "Running performance tests"
+            - yarn run test:ci
+  - name: E2E Tests (cypress)
+    dependencies:
+      - Setup
+    task:
+      env_vars:
+        - name: CYPRESS_RECORD_KEY
+          value: '8e67a327-7d3d-43ba-8198-51c4921ea522'
+      jobs:
+        - name: yarn run cy:ci
+          commands:
+            - yarn run cy:ci
