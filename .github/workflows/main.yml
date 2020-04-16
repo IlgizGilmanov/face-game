@@ -1,8 +1,7 @@
 name: Build and Deploy
 on:
-  push:
-    branches:
-      - firebase-hosting-deployment
+  check_suite:
+    types: [completed]
 
 jobs:
   build:
