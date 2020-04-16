@@ -1,4 +1,6 @@
-[![Build Status](https://ilgizgilmanov.semaphoreci.com/badges/face-game.svg?style=shields)](https://ilgizgilmanov.semaphoreci.com/projects/face-game)
+![Build and Deploy](https://github.com/IlgizGilmanov/face-game/workflows/Build%20and%20Deploy/badge.svg)
+
+[![CI Status](https://ilgizgilmanov.semaphoreci.com/badges/face-game.svg)](https://ilgizgilmanov.semaphoreci.com/projects/face-game)
 
 # FaceGame
 
