@@ -2,13 +2,14 @@
   "name": "face-game",
   "version": "1.0.0",
   "engines": {
-    "node": "13.X"
+    "node": "12.X"
   },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "start-server": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod",
     "lint": "ng lint --type-check",
     "stylelint": "stylelint \"src/**/*.scss\" --syntax scss",
     "test": "ng test",
@@ -32,12 +33,13 @@
     "@angular/router": "~9.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "typescript": "~3.7.5",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
-    "@angular/cli": "~9.1.0",
-    "@angular/compiler-cli": "~9.1.0",
+    "@angular/cli": "^9.1.1",
+    "@angular/compiler-cli": "^9.1.1",
     "@angular/language-service": "~9.1.0",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -57,7 +59,6 @@
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.16.1",
     "ts-node": "~8.3.0",
-    "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "tslint": "~5.18.0"
   }
 }
