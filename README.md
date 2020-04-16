@@ -1,4 +1,4 @@
-![Build and Deploy](https://github.com/IlgizGilmanov/face-game/workflows/Build%20and%20Deploy/badge.svg)
+![Build and Deploy](https://github.com/IlgizGilmanov/face-game/workflows/Build%20and%20Deploy/badge.svg?branch=master)
 
 [![CI Status](https://ilgizgilmanov.semaphoreci.com/badges/face-game.svg)](https://ilgizgilmanov.semaphoreci.com/projects/face-game)
 
