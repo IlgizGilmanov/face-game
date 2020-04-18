@@ -1,0 +1,6 @@
+<div>Current Game Stage: {{ gameStage$ | async }}</div>
+
+<app-game-start *ngIf="(gameStage$ | async) === stages.START"></app-game-start>
+<app-game-play *ngIf="(gameStage$ | async) === stages.PLAY"></app-game-play>
+<app-game-result *ngIf="(gameStage$ | async) === stages.RESULT">
+</app-game-result>

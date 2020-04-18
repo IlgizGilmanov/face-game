@@ -10,18 +10,22 @@ export class HeaderComponent implements OnInit {
     {
       icon: 'face',
       name: 'Start game',
+      url: '/game',
     },
     {
       icon: 'emoji_events',
       name: 'Leaderboard',
+      url: '/leaderboard',
     },
     {
       icon: 'exit_to_app',
       name: 'Sign in',
+      url: '',
     },
     {
       icon: 'power_settings_new',
       name: 'Log out',
+      url: '',
       disabled: true,
     },
   ];
