@@ -6,10 +6,10 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #headerMenu="matMenu">
-    <a [routerLink]="[link.url]" mat-menu-item
-       *ngFor="let link of headerMenuItems" [disabled]="link.disabled">
+    <button mat-menu-item *ngFor="let link of headerMenuItems"
+            (click)="this[link.handler]()" [disabled]="link.disabled">
       <mat-icon>{{link.icon}}</mat-icon>
       <span>{{link.name}}</span>
-    </a>
+    </button>
   </mat-menu>
 </mat-toolbar>
