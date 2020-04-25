@@ -1,0 +1,9 @@
+<app-game-start *ngIf="(gameStage$ | async) === stages.INTRO"
+                [personGroups$]="personGroups$" [personGroupId]="personGroupId">
+</app-game-start>
+<app-game-play *ngIf="(gameStage$ | async) === stages.PLAY"
+               [questions$]="questions$"
+               [currentQuestionId]="currentQuestionId">
+</app-game-play>
+<app-game-result *ngIf="(gameStage$ | async) === stages.RESULT"
+                 [result$]="result$">

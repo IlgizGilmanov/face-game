@@ -1,0 +1,30 @@
+<section class="mat-typography wrapper">
+  <h1>{{ displayedTimeLeft }}</h1>
+  <mat-progress-bar mode="determinate" [value]="progressBarTimeLeft"
+                    [color]="progressBarTheme">
+  </mat-progress-bar>
+
+  <h1>What is the name of that {{personType}}?</h1>
+
+  <div>
+    <div *ngFor="let question of questions$ | async">
+      <div *ngIf="question.id === currentQuestionId">
+        <div class="img-wrapper">
+          <img *ngIf="question.imgPath;else blankImg" [src]="question.imgPath"
+               [alt]="personType + ' picture'">
+          <ng-template #blankImg>
+            <mat-icon [inline]="true">sentiment_very_dissatisfied</mat-icon>
+            <h1>No photo</h1>
+          </ng-template>
+        </div>
+        <div class="answers">
+          <button *ngFor="let answer of question.answers" mat-raised-button
+                  [color]="buttonsTheme" (click)="chooseAnAnswer(answer.id)">
+            {{ answer.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

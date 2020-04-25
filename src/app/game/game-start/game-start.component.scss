@@ -1,0 +1,39 @@
+@import 'src/styles';
+
+.wrapper {
+  display: grid;
+  justify-content: center;
+  grid-gap: 1rem;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.group {
+  text-align: center;
+}
+
+.action {
+  mat-icon {
+    @include md-icon-size(1.25rem);
+    margin-left: 0.3rem;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    mat-icon {
+      transform: translateX(15%);
+      transition: all 0.3s;
+    }
+  }
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+@for $index from 1 through 6 {
+  h#{$index} {
+    text-align: center;
+  }
+}
