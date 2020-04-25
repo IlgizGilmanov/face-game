@@ -1,1 +1,39 @@
-<p>result works!</p>
+<section class="mat-typography wrapper" *ngIf="(result$ | async) as result">
+  <h1>Game results</h1>
+
+  <p> {{ result.correctCount }} / {{ result.questions.length }} </p>
+
+  <p>
+    <span>Time spent:</span>
+    <span> {{ (result.timeSpent / 10).toFixed(1) }}s</span>
+  </p>
+
+  <p>
+    <span>Score:</span>
+    <span> {{ result.score }}</span>
+  </p>
+
+  <div class="question-list">
+    <div *ngFor="let question of result.questions" class="question">
+      <div class="img-wrapper">
+        <img *ngIf="question.imgPath;else blankImg" [src]="question.imgPath"
+             [alt]="personType + ' picture'">
+        <ng-template #blankImg>
+          <mat-icon [inline]="true">sentiment_very_dissatisfied</mat-icon>
+          <h1>No photo</h1>
+        </ng-template>
+      </div>
+
+      <div class="info">
+        <span
+              [ngClass]="(question.selectedAnswerId !== question.correctAnswerId) ? 'failure' : 'correct'">
+          {{getSelectedAnswerName(question)}}
+        </span>
+        <span *ngIf="question.selectedAnswerId !== question.correctAnswerId">
+          {{getCorrectAnswerName(question)}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+</section>

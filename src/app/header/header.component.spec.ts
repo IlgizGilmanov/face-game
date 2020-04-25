@@ -1,12 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { MatIconModule } from '@angular/material/icon';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { HeaderComponent } from './header.component';
 
@@ -19,7 +21,8 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [BrowserAnimationsModule, MatToolbarModule, MatMenuModule, MatIconModule],
+      imports: [BrowserAnimationsModule, RouterTestingModule, MatToolbarModule, MatMenuModule, MatIconModule],
+      providers: [provideMockStore()],
     }).compileComponents();
   }));
 

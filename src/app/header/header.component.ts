@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { intro } from 'src/app/game/store/game-stage.actions';
+import { prepareGame } from 'src/app/game/game.actions';
 
 @Component({
   selector: 'app-header',
@@ -34,26 +34,26 @@ export class HeaderComponent implements OnInit {
     },
   ];
 
-  constructor(private store: Store<{ gameStage: string }>, private router: Router) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {}
 
   startGame() {
-    this.store.dispatch(intro());
+    this.store.dispatch(prepareGame());
     this.router.navigate(['/game']);
-    console.log('%cHeaderComponent startGame', 'background: black; color: white;');
+    console.log('%cHeaderComponent startGame', 'background: yellow;');
   }
 
   openLeaderboard() {
     this.router.navigate(['/leaderboard']);
-    console.log('%cHeaderComponent openLeaderboard', 'background: black; color: white;');
+    console.log('%cHeaderComponent openLeaderboard', 'background: yellow;');
   }
 
   signIn() {
-    console.log('%cHeaderComponent signIn', 'background: black; color: white;');
+    console.log('%cHeaderComponent signIn', 'background: yellow;');
   }
 
   logout() {
-    console.log('%cHeaderComponent logout', 'background: black; color: white;');
+    console.log('%cHeaderComponent logout', 'background: yellow;');
   }
 }

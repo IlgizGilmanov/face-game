@@ -1,2 +1,33 @@
-<p>start works!</p>
-<button id="playGame" (click)="playGame()">Start Now</button>
+<section *ngIf="(personGroups$ | async).length;else loading"
+         class="mat-typography wrapper">
+  <div>
+    <h1>How it works</h1>
+    <p>
+      Identify as many {{ personType }} as you can in 30 seconds. You'll get a
+      score based on your accuracy and speed.
+    </p>
+  </div>
+
+  <div class="group">
+    <h3 class="uppercase">Choose a group</h3>
+    <mat-form-field>
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="personGroupId"
+                  (selectionChange)="groupChanged($event)">
+        <mat-option *ngFor="let group of personGroups$ | async"
+                    [value]="group.id">
+          {{ group.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="playGame()" class="action">
+    <span>Start Now</span>
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</section>
+
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
