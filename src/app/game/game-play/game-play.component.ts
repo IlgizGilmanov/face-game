@@ -6,8 +6,9 @@ import sample from 'lodash-es/sample';
 
 import { environment } from 'src/environments/environment';
 import { THEME_COLORS } from 'src/app/constants/themeColors';
-import { selectAnswer, endGame, showResults } from '../game.actions';
+import { chooseAnswer, endGame, showResults } from '../game.actions';
 import { Question } from '../game.model';
+import { User } from 'src/app/auth/auth.model';
 
 @Component({
   selector: 'app-game-play',
@@ -17,7 +18,9 @@ import { Question } from '../game.model';
 export class GamePlayComponent implements OnChanges, OnInit, OnDestroy {
   @Input() questions$: Observable<Question[]>;
   @Input() currentQuestionId: number;
-  private subscribe: Subscription;
+  @Input() user: User;
+
+  private timerSub: Subscription;
   public timeLeft: number = environment.countdownInitialTime;
   public displayedTimeLeft: string = environment.countdownInitialTime.toString();
   public progressBarTimeLeft = 0;
@@ -35,7 +38,7 @@ export class GamePlayComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     const countdownTimer = timer(0, 100);
-    this.subscribe = countdownTimer.subscribe((val) => {
+    this.timerSub = countdownTimer.subscribe((val) => {
       if (this.timeLeft <= 0) {
         this.endGame();
         return;
@@ -60,17 +63,22 @@ export class GamePlayComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   public chooseAnAnswer(answerId: number) {
-    this.store.dispatch(selectAnswer({ answerId }));
+    this.store.dispatch(chooseAnswer({ answerId }));
     this.setButtonTheme();
   }
 
   private stopTimer() {
-    this.subscribe.unsubscribe();
+    this.timerSub.unsubscribe();
   }
 
   private endGame() {
     this.stopTimer();
-    this.store.dispatch(endGame({ timeSpent: environment.countdownInitialTime - this.timeLeft }));
+    this.store.dispatch(
+      endGame({
+        timeSpent: environment.countdownInitialTime - this.timeLeft,
+        userId: this.user ? this.user.uid : null,
+      }),
+    );
     setTimeout(() => {
       this.store.dispatch(showResults());
     });

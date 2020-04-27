@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "face-game-5f50e"
+  },
+  "targets": {
+    "face-game-5f50e": {
+      "hosting": {
+        "face-game": [
+          "face-game-5f50e"
+        ]
+      }
+    }
   }
 }

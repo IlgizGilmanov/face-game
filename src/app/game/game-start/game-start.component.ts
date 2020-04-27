@@ -8,12 +8,13 @@ import {
   fetchPersonGroups,
   fetchPersons,
   startGame,
-  selectPersonGroupId,
+  choosePersonGroupId,
   clearCurrentQuestions,
   clearCurrentQuestionId,
   clearCurrentResult,
   fetchResults,
 } from '../game.actions';
+import { loginRequested } from 'src/app/auth/auth.actions';
 
 @Component({
   selector: 'app-game-start',
@@ -22,6 +23,7 @@ import {
 })
 export class GameStartComponent implements OnInit, OnDestroy {
   public personType = environment.personTypePlural;
+  @Input() isLoggedIn: boolean;
   @Input() personGroups$: Observable<PersonGroup[]>;
   @Input() personGroupId: number;
   // isStartPreparing = false;
@@ -41,11 +43,15 @@ export class GameStartComponent implements OnInit, OnDestroy {
   }
 
   public groupChanged({ value }) {
-    this.store.dispatch(selectPersonGroupId({ groupId: value }));
+    this.store.dispatch(choosePersonGroupId({ groupId: value }));
   }
 
   public playGame() {
     this.store.dispatch(startGame());
+  }
+
+  public login() {
+    this.store.dispatch(loginRequested());
   }
 
   ngOnDestroy() {

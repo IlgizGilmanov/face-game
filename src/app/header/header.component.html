@@ -1,15 +1,39 @@
 <mat-toolbar color="primary">
   <span data-testid="app-name">Face game</span>
   <span class="fill-remaining-space"></span>
+
+  <div class="user" *ngIf="(user$ | async)">
+    <span class="user-name">{{ (user$ | async)?.name }}</span>
+    <div class="user-img">
+      <img [src]="(user$ | async)?.photoURL" alt="userpic">
+    </div>
+  </div>
+
   <button mat-icon-button [matMenuTriggerFor]="headerMenu"
           aria-label="Header menu">
     <mat-icon>more_vert</mat-icon>
   </button>
+
   <mat-menu #headerMenu="matMenu">
-    <button mat-menu-item *ngFor="let link of headerMenuItems"
-            (click)="this[link.handler]()" [disabled]="link.disabled">
-      <mat-icon>{{link.icon}}</mat-icon>
-      <span>{{link.name}}</span>
+    <button mat-menu-item (click)="startGame()">
+      <mat-icon>face</mat-icon>
+      <span>Start game</span>
+    </button>
+
+    <button mat-menu-item *ngIf="!loading && isLoggedIn"
+            (click)="openLeaderboard()">
+      <mat-icon>emoji_events</mat-icon>
+      <span>Leaderboard</span>
+    </button>
+
+    <button mat-menu-item *ngIf="!loading && !isLoggedIn" (click)="signIn()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Sign in</span>
+    </button>
+
+    <button mat-menu-item *ngIf="!loading && isLoggedIn" (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Log out</span>
     </button>
   </mat-menu>
 </mat-toolbar>

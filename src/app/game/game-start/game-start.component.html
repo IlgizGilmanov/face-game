@@ -1,4 +1,4 @@
-<section *ngIf="(personGroups$ | async).length;else loading"
+<section *ngIf="(personGroups$ | async).length;else personGroupsLoading"
          class="mat-typography wrapper">
   <div>
     <h1>How it works</h1>
@@ -22,12 +22,26 @@
     </mat-form-field>
   </div>
 
-  <button mat-raised-button color="primary" (click)="playGame()" class="action">
+  <button mat-raised-button color="primary" (click)="playGame()"
+          class="action animated">
     <span>Start Now</span>
     <mat-icon>arrow_forward</mat-icon>
   </button>
+
+  <div class="not-autorized" *ngIf="!isLoggedIn">
+    <h3 class="uppercase">or</h3>
+
+    <button mat-raised-button color="accent" (click)="login()" class="action">
+      <span>Login with Google</span>
+    </button>
+
+    <h3>to save game results and have access to the leaderboard</h3>
+  </div>
+
+
+
 </section>
 
-<ng-template #loading>
+<ng-template #personGroupsLoading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>

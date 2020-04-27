@@ -26,10 +26,11 @@ export interface Question {
   imgPath: string;
   answers: Answer[];
   correctAnswerId: number;
-  selectedAnswerId: number;
+  chooseAnswerId: number;
 }
 
 export interface Result {
+  userId: string;
   questions: Question[];
   correctCount: number;
   timeSpent: number;

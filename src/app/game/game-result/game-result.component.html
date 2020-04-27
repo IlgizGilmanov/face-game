@@ -26,10 +26,10 @@
 
       <div class="info">
         <span
-              [ngClass]="(question.selectedAnswerId !== question.correctAnswerId) ? 'failure' : 'correct'">
+              [ngClass]="(question.chooseAnswerId !== question.correctAnswerId) ? 'failure' : 'correct'">
           {{getSelectedAnswerName(question)}}
         </span>
-        <span *ngIf="question.selectedAnswerId !== question.correctAnswerId">
+        <span *ngIf="question.chooseAnswerId !== question.correctAnswerId">
           {{getCorrectAnswerName(question)}}
         </span>
       </div>

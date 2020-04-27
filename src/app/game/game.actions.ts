@@ -4,7 +4,7 @@ import { PersonGroup, Person, Result } from './game.model';
 
 export const prepareGame = createAction('[Game] Prepare game');
 export const startGame = createAction('[Game] Start game');
-export const endGame = createAction('[Game] End game', props<{ timeSpent: number }>());
+export const endGame = createAction('[Game] End game', props<{ timeSpent: number; userId: string }>());
 export const showResults = createAction('[Game] Show results');
 
 export const fetchPersonGroups = createAction('[Game] Fetch person groups');
@@ -16,10 +16,10 @@ export const setResults = createAction('[Game] Set results', props<{ results: Re
 export const storeResults = createAction('[Game] Store results');
 export const storeResultsSuccess = createAction('[Game] Store results success');
 
-export const selectPersonGroupId = createAction('[Game] Select person group', props<{ groupId: number }>());
+export const choosePersonGroupId = createAction('[Game] Choose person group', props<{ groupId: number }>());
 
 export const clearCurrentQuestions = createAction('[Game] Clear current questions');
 export const clearCurrentQuestionId = createAction('[Game] Clear current question');
 export const clearCurrentResult = createAction('[Game] Clear current result');
 
-export const selectAnswer = createAction('[Game] Select an answer', props<{ answerId: number }>());
+export const chooseAnswer = createAction('[Game] Choose an answer', props<{ answerId: number }>());

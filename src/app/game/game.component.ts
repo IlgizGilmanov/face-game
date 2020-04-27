@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { GameStageTypes, PersonGroup, Question, Result } from './game.model';
-import { prepareGame, selectPersonGroupId } from './game.actions';
+import { prepareGame, choosePersonGroupId } from './game.actions';
 import {
   selectGameStage,
   selectGamePersonGroups,
@@ -13,6 +13,8 @@ import {
   selectGameCurrentQuestionId,
   selectGameCurrentResult,
 } from './game.selectors';
+import { selectAuthIsLoggedIn, selectAuthLoading, selectAuthUser } from '../auth/auth.selectors';
+import { User } from '../auth/auth.model';
 
 @Component({
   selector: 'app-game',
@@ -20,6 +22,9 @@ import {
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
+  public isLoggedIn: boolean;
+  public user: User;
+  public loading: boolean;
   public gameStage$: Observable<string>;
   public stages = GameStageTypes;
   public personGroups$: Observable<PersonGroup[]>;
@@ -28,22 +33,25 @@ export class GameComponent implements OnInit {
   public currentQuestionId: number;
   public result$: Observable<Result>;
 
-  constructor(private readonly store: Store) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.store.pipe(select(selectAuthIsLoggedIn)).subscribe((isLoggedIn) => (this.isLoggedIn = isLoggedIn));
+    this.store.pipe(select(selectAuthUser)).subscribe((user) => (this.user = user));
+    this.store.pipe(select(selectAuthLoading)).subscribe((loading) => (this.loading = loading));
     this.gameStage$ = this.store.pipe(select(selectGameStage));
     this.personGroups$ = this.store.pipe(select(selectGamePersonGroups));
     this.store.pipe(select(selectGamePersonGroupId)).subscribe((personGroupId) => {
       if (!personGroupId) {
-        this.store.dispatch(selectPersonGroupId({ groupId: environment.defaultPersonGroup }));
+        this.store.dispatch(choosePersonGroupId({ groupId: environment.defaultPersonGroup }));
       } else {
         this.personGroupId = personGroupId;
       }
     });
     this.questions$ = this.store.pipe(select(selectGameCurrentQuestions));
-    this.store.pipe(select(selectGameCurrentQuestionId)).subscribe((currentQuestionId) => {
-      this.currentQuestionId = currentQuestionId;
-    });
+    this.store
+      .pipe(select(selectGameCurrentQuestionId))
+      .subscribe((currentQuestionId) => (this.currentQuestionId = currentQuestionId));
     this.result$ = this.store.pipe(select(selectGameCurrentResult));
 
     this.store.dispatch(prepareGame());

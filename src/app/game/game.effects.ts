@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Action, select, Store } from '@ngrx/store';
-import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
-import { EMPTY, forkJoin, of } from 'rxjs';
-import { tap, withLatestFrom, switchMap, map, catchError, mergeMap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { EMPTY } from 'rxjs';
+import { withLatestFrom, map, catchError, mergeMap } from 'rxjs/operators';
 
-import { State } from './game.state';
 import { PersonGroup, Person, Result } from './game.model';
 import * as gameActions from './game.actions';
-import { selectGamePersonGroupId, selectGameStage, selectGameState, selectGameResults } from './game.selectors';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import { selectGameResults } from './game.selectors';
 
 @Injectable()
 export class GameEffects {
   baseUrl = 'https://face-game-5f50e.firebaseio.com/';
 
-  constructor(private actions$: Actions, private store: Store<State>, private http: HttpClient) {}
+  constructor(private actions$: Actions, private store: Store, private http: HttpClient) {}
 
   fetchPersonGroups$ = createEffect(() =>
     this.actions$.pipe(
@@ -65,58 +63,4 @@ export class GameEffects {
       ),
     ),
   );
-
-  // endGame$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(gameActions.endGame),
-  //       tap(() => gameActions.showResults()),
-  //       // mergeMap(
-  //         // this.http.get<Person[]>(`${this.baseUrl}persons.json`).pipe(
-  //         //   map((persons: Person[]) => gameActions.setPersons({ persons })),
-  //         //   catchError(() => EMPTY),
-  //         // ),
-  //       ),
-  //     ),
-  // );
-
-  // summarizing$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(gameActions.endGame),
-  //       withLatestFrom(this.store.pipe(select(selectGameState))),
-  //       tap(([action, state]) => {
-  //         console.log('action', action);
-  //         console.log('state', state);
-  //         const correctCount = state.currentQuestions.filter((q) => q.correctAnswerId === q.selectedAnswerId).length;
-  //         const successRate = correctCount / state.currentQuestions.length;
-
-  //         const result: Result = {
-  //           questions: state.currentQuestions,
-  //           correctCount,
-  //           timeSpent: state.currentResult.timeSpent,
-  //           score: Math.trunc(((correctCount * successRate) / state.currentResult.timeSpent) * 10000),
-  //         };
-
-  //         console.log('result', result);
-
-  //         return this.store.dispatch(gameActions.showResults());
-
-  //         // return this.http.put(`${this.baseUrl}results.json`, recipesState.recipes);
-  //       }),
-  //     ),
-  //   { dispatch: false },
-  // );
-
-  // logGameStage = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(gameActions.prepareGame, gameActions.startGame, gameActions.endGame),
-  //       withLatestFrom(this.store.pipe(select(selectGameStage))),
-  //       tap(([action, stage]) =>
-  //         console.log('%cEffects Actual game stage:', 'background: black; color: white;', stage),
-  //       ),
-  //     ),
-  //   { dispatch: false },
-  // );
 }
