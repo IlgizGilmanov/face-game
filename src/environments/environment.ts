@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  firebaseAPIKey: 'AIzaSyAXtkJTMEwhDVXBPzHCGr-hdGiopWh9bZU',
   defaultPersonGroup: 1,
   personType: 'superhero',
   personTypePlural: 'superheroes',
