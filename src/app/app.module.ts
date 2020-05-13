@@ -24,7 +24,7 @@ import { AuthService } from './auth/auth.service';
   declarations: [AppComponent, HeaderComponent],
   imports: [
     // angular
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
