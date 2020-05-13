@@ -1,13 +1,18 @@
-// import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
+import { AuthState } from 'src/app/auth/auth.model';
 
-// import { GameState } from 'src/app/game/game.model';
-// import { gameReducer } from 'src/app/game/game.reducer';
+import * as fromAuth from 'src/app/auth/auth.reducer';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
-// export const reducers: ActionReducerMap<AppState> = {
-// game: gameReducer,
-// };
+export interface AppState {
+  auth: AuthState;
+}
 
-// export const selectGameState = createFeatureSelector<AppState, GameState>('game');
+export const reducers: ActionReducerMap<AppState> = {
+  auth: fromAuth.authReducer,
+};
 
-// tslint:disable-next-line: no-empty-interface
-export interface AppState {}
+export const selectAuthState = createFeatureSelector<AppState, AuthState>('auth');
+
+export interface AppState {
+  auth: AuthState;
+}

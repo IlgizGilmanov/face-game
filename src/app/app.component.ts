@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { autoLoginRequested } from './auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(autoLoginRequested());
+  }
 }

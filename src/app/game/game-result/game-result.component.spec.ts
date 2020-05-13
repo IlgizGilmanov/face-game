@@ -1,26 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { provideMockStore } from '@ngrx/store/testing';
 
-import { GameResultComponent } from './game-result.component';
+// import { GameResultComponent } from './game-result.component';
 
-describe('GameResultComponent', () => {
-  let component: GameResultComponent;
-  let fixture: ComponentFixture<GameResultComponent>;
+// describe('GameResultComponent', () => {
+//   let component: GameResultComponent;
+//   let fixture: ComponentFixture<GameResultComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [GameResultComponent],
-      providers: [provideMockStore()],
-    }).compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [GameResultComponent],
+//       providers: [provideMockStore()],
+//     }).compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GameResultComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(GameResultComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
 import { AppState } from 'src/app/app.state';
 import { gameReducer } from './game.reducer';

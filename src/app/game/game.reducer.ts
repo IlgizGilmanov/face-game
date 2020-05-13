@@ -39,17 +39,18 @@ const reducer = createReducer(
           ),
         ]),
         correctAnswerId: person.id,
-        selectedAnswerId: null,
+        chooseAnswerId: null,
       })),
     );
 
     return { ...state, stage: GameStageTypes.PLAY, currentQuestions, currentQuestionId: currentQuestions[0].id };
   }),
-  on(gameActions.endGame, (state, { timeSpent }) => {
-    const correctCount = state.currentQuestions.filter((q) => q.correctAnswerId === q.selectedAnswerId).length;
+  on(gameActions.endGame, (state, { timeSpent, userId }) => {
+    const correctCount = state.currentQuestions.filter((q) => q.correctAnswerId === q.chooseAnswerId).length;
     const successRate = correctCount / state.currentQuestions.length;
 
     const result: Result = {
+      userId,
       questions: state.currentQuestions,
       correctCount,
       timeSpent,
@@ -63,15 +64,15 @@ const reducer = createReducer(
   on(gameActions.setPersonGroups, (state, { groups }) => ({ ...state, personGroups: groups ? [...groups] : [] })),
   on(gameActions.setPersons, (state, { persons }) => ({ ...state, persons: persons ? [...persons] : [] })),
   on(gameActions.setResults, (state, { results }) => ({ ...state, results: results ? [...results] : [] })),
-  on(gameActions.selectPersonGroupId, (state, { groupId }) => ({ ...state, currentPersonGroupId: groupId })),
+  on(gameActions.choosePersonGroupId, (state, { groupId }) => ({ ...state, currentPersonGroupId: groupId })),
 
   on(gameActions.clearCurrentQuestions, (state) => ({ ...state, currentQuestions: [] })),
   on(gameActions.clearCurrentQuestionId, (state) => ({ ...state, clearcurrentQuestionId: null })),
   on(gameActions.clearCurrentResult, (state) => ({ ...state, currentResult: null })),
 
-  on(gameActions.selectAnswer, (state, { answerId }) => {
+  on(gameActions.chooseAnswer, (state, { answerId }) => {
     const newQuestions = state.currentQuestions.map((q) =>
-      q.id === state.currentQuestionId ? { ...q, selectedAnswerId: answerId } : q,
+      q.id === state.currentQuestionId ? { ...q, chooseAnswerId: answerId } : q,
     );
     const index = state.currentQuestions.findIndex((q) => q.id === state.currentQuestionId);
     const isLastQuestion = index === state.currentQuestions.length - 1;
