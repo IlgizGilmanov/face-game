@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { AuthGuard } from './auth/auth-guard';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/game', pathMatch: 'full' },
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'leaderboard',
-    canActivate: [AuthGuard],
+    canActivate: [AngularFireAuthGuard],
     loadChildren: () => import('./leaderboard/leaderboard.module').then((m) => m.LeaderboardModule),
   },
 ];
