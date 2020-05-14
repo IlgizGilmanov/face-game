@@ -23,6 +23,7 @@ export function app() {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     })
     .then(() => console.log('Database connected successfully!'))
     .catch((err) => console.error(err));

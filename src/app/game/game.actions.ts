@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-import { PersonGroup, Person, Result } from './game.model';
+import { Person } from 'src/app/client-models/person';
+import { PersonGroup, Result } from './game.model';
 
 export const prepareGame = createAction('[Game] Prepare game');
 export const startGame = createAction('[Game] Start game');
