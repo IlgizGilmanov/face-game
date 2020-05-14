@@ -3,8 +3,9 @@ import sampleSize from 'lodash-es/sampleSize';
 import shuffle from 'lodash-es/shuffle';
 
 import { environment } from 'src/environments/environment';
+import { Person } from 'src/app/client-models/person';
+import { GameState, GameStageTypes, Question, Result } from './game.model';
 import * as gameActions from './game.actions';
-import { GameState, GameStageTypes, Person, Question, Result } from './game.model';
 
 export const initialState: GameState = {
   stage: '',

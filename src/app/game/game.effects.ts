@@ -5,15 +5,22 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
 import { withLatestFrom, map, catchError, mergeMap } from 'rxjs/operators';
 
-import { PersonGroup, Person, Result } from './game.model';
+import { Person } from 'src/app/client-models/person';
+import { PersonGroup, Result } from './game.model';
 import * as gameActions from './game.actions';
 import { selectGameResults } from './game.selectors';
+import { PersonService } from '../services/person.service';
 
 @Injectable()
 export class GameEffects {
   baseUrl = 'https://face-game-5f50e.firebaseio.com/';
 
-  constructor(private actions$: Actions, private store: Store, private http: HttpClient) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private http: HttpClient,
+    private personService: PersonService,
+  ) {}
 
   fetchPersonGroups$ = createEffect(() =>
     this.actions$.pipe(
@@ -31,7 +38,7 @@ export class GameEffects {
     this.actions$.pipe(
       ofType(gameActions.fetchPersons),
       mergeMap(() =>
-        this.http.get<Person[]>(`${this.baseUrl}persons.json`).pipe(
+        this.personService.getPersons().pipe(
           map((persons: Person[]) => gameActions.setPersons({ persons })),
           catchError(() => EMPTY),
         ),

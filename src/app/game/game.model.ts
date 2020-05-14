@@ -1,14 +1,9 @@
+import { Person } from 'src/app/client-models/person';
+
 export enum GameStageTypes {
   INTRO = 'intro',
   PLAY = 'play',
   RESULT = 'result',
-}
-
-export interface Person {
-  id: number;
-  name: string;
-  groupId: number;
-  imgPath: string;
 }
 
 export interface PersonGroup {
