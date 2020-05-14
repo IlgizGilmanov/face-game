@@ -23,7 +23,9 @@
     "dev:ssr": "ng run face-game:serve-ssr",
     "serve:ssr": "node dist/face-game/server/main.js",
     "build:ssr": "ng build --prod && ng run face-game:server:production",
-    "prerender": "ng run face-game:prerender"
+    "prerender": "ng run face-game:prerender",
+    "start:heroku": "node dist/server",
+    "postinstall": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
