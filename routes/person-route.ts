@@ -66,5 +66,18 @@ export class PersonRoute {
         }
       });
     });
+
+    // Delete All Person
+    app.route('/api/delete-persons').delete((req: Request, res: Response, next: NextFunction) => {
+      Person.deleteMany((error, data) => {
+        if (error) {
+          return next(error);
+        } else {
+          res.status(200).json({
+            msg: data,
+          });
+        }
+      });
+    });
   }
 }

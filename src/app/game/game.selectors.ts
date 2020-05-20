@@ -7,6 +7,7 @@ export const selectGameState = createSelector(selectGame, (state: GameState) => 
 
 export const selectGameStage = createSelector(selectGameState, (state: GameState) => state.stage);
 export const selectGamePersonGroups = createSelector(selectGameState, (state: GameState) => state.personGroups);
+export const selectGamePersons = createSelector(selectGameState, (state: GameState) => state.persons);
 export const selectGameResults = createSelector(selectGameState, (state: GameState) => state.results);
 export const selectGamePersonGroupId = createSelector(
   selectGameState,

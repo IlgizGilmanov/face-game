@@ -10,6 +10,7 @@ export const showResults = createAction('[Game] Show results');
 
 export const fetchPersonGroups = createAction('[Game] Fetch person groups');
 export const setPersonGroups = createAction('[Game] Set person groups', props<{ groups: PersonGroup[] }>());
+export const addPerson = createAction('[Game] Add person', props<{ person: Person }>());
 export const fetchPersons = createAction('[Game] Fetch persons');
 export const setPersons = createAction('[Game] Set persons', props<{ persons: Person[] }>());
 export const fetchResults = createAction('[Game] Fetch results');

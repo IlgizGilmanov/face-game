@@ -1,4 +1,9 @@
 <div *ngIf="!loading;else gameLoading">
+  <div *ngFor="let person of persons$ | async">
+    {{ person._id }}, {{ person.name }}, {{ person.groupId }},
+    {{ person.imgPath }}
+  </div>
+
   <app-game-start *ngIf="(gameStage$ | async) === stages.INTRO"
                   [personGroups$]="personGroups$"
                   [personGroupId]="personGroupId" [isLoggedIn]="isLoggedIn">

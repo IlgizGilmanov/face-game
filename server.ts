@@ -19,6 +19,7 @@ export function app() {
 
   // MongoDB database settings
   const uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/person-db';
+  console.log('uristring', uristring);
 
   mongoose
     .connect(uristring, {
