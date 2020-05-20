@@ -18,8 +18,10 @@ export function app() {
   const personRoute: PersonRoute = new PersonRoute();
 
   // MongoDB database settings
+  const uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/person-db';
+
   mongoose
-    .connect('mongodb://localhost/person-db', {
+    .connect(uristring, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
