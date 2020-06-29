@@ -18,7 +18,7 @@ export function app() {
   const personRoute: PersonRoute = new PersonRoute();
 
   // MongoDB database settings
-  const uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/person-db';
+  const uristring = process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/person-db';
   console.log('uristring', uristring);
 
   mongoose

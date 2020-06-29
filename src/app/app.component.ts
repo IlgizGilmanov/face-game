@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // this.store.dispatch(autoLoginRequested());
-    const newPerson: Person = { name: `test2${new Date().getTime()}`, groupId: 1, imgPath: 'path' };
-    this.store.dispatch(addPerson({ person: newPerson }));
+    // const newPerson: Person = { name: `test2${new Date().getTime()}`, groupId: 1, imgPath: 'path' };
+    // this.store.dispatch(addPerson({ person: newPerson }));
   }
 }
