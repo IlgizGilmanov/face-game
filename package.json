@@ -46,6 +46,7 @@
     "@nguniversal/express-engine": "^9.1.1",
     "@types/mongoose": "^5.7.19",
     "body-parser": "^1.19.0",
+    "csvtojson": "^2.0.10",
     "express": "^4.15.2",
     "firebase": "^7.14.2",
     "lodash-es": "^4.17.15",
