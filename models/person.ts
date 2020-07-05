@@ -7,11 +7,11 @@ const personSchema: Schema = new Schema(
       required: true,
       unique: true,
     },
-    groupId: {
-      type: Number,
+    groupIds: {
+      type: [Number],
       required: true,
     },
-    imgPath: {
+    profilePhoto: {
       type: String,
       required: true,
     },

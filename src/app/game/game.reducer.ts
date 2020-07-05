@@ -31,7 +31,7 @@ const reducer = createReducer(
     const currentQuestions: Question[] = shuffle(
       filteredPersons.map((person: Person) => ({
         id: person._id,
-        imgPath: person.imgPath,
+        profilePhoto: person.profilePhoto,
         answers: shuffle([
           { id: person._id, name: person.name },
           ...sampleSize(
