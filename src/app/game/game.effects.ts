@@ -8,7 +8,7 @@ import { withLatestFrom, map, catchError, mergeMap } from 'rxjs/operators';
 import { Person } from 'src/app/client-models/person';
 import { PersonGroup, Result } from './game.model';
 import * as gameActions from './game.actions';
-import { selectGameResults } from './game.selectors';
+import { selectGameResults, selectGamePersonGroups, selectGamePersons } from './game.selectors';
 import { PersonService } from '../services/person.service';
 
 @Injectable()
@@ -40,6 +40,19 @@ export class GameEffects {
       mergeMap(() =>
         this.personService.getPersons().pipe(
           map((persons: Person[]) => gameActions.setPersons({ persons })),
+          catchError(() => EMPTY),
+        ),
+      ),
+    ),
+  );
+
+  addPerson$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(gameActions.addPerson),
+      withLatestFrom(this.store.pipe(select(selectGamePersons))),
+      mergeMap(([action, persons]) =>
+        this.personService.addPerson(action.person).pipe(
+          map((person: Person) => gameActions.setPersons({ persons: [...persons, person] })),
           catchError(() => EMPTY),
         ),
       ),

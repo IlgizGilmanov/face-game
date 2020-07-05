@@ -30,16 +30,18 @@ const reducer = createReducer(
 
     const currentQuestions: Question[] = shuffle(
       filteredPersons.map((person: Person) => ({
-        id: person.id,
+        id: person._id,
         imgPath: person.imgPath,
         answers: shuffle([
-          { id: person.id, name: person.name },
+          { id: person._id, name: person.name },
           ...sampleSize(
-            filteredPersons.filter((p: Person) => p.id !== person.id).map((p: Person) => ({ id: p.id, name: p.name })),
+            filteredPersons
+              .filter((p: Person) => p._id !== person._id)
+              .map((p: Person) => ({ id: p._id, name: p.name })),
             3,
           ),
         ]),
-        correctAnswerId: person.id,
+        correctAnswerId: person._id,
         chooseAnswerId: null,
       })),
     );

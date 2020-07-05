@@ -1,5 +1,5 @@
 export interface Person {
-  id: number;
+  _id?: number;
   name: string;
   groupId: number;
   imgPath: string;
