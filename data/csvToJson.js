@@ -1,3 +1,10 @@
+// Export zip archive with users' data from notion
+// Extract archive and put all contents of the archive in the `data/input` folder (create if not exists)
+// run `node data/csvToJson.js` command in terminal (you need to have an installed nodejs)
+// Converted json file will be in `output` folder, userpics - in `output/images`
+
+// More info: https://www.npmjs.com/package/csvtojson
+
 const fs = require('fs');
 const CSVToJSON = require('csvtojson');
 
@@ -37,34 +44,42 @@ CSVToJSON()
         return;
       }
 
+      let outputPhotoPath = '';
       if (photoPath) {
+        // if the user has several photos, get first one
         if (photoPath.indexOf(',') >= 0) {
           photoPath = photoPath.slice(0, photoPath.indexOf(','));
         }
-        console.log(photoPath);
 
-        // if url contains
-        if (/^(?=.*?\bhttp\b).*$/.test(fn)) {
-          // TODO: Download image and save in /images folder
-          // https://stackoverflow.com/questions/12740659/downloading-images-with-node-js
-          return;
+        // create 'images' folder if not exists
+        const imagesDir = `${outputFolderPath}/images`;
+        if (!fs.existsSync(imagesDir)) {
+          fs.mkdirSync(imagesDir);
         }
 
-        // const inStr = fs.createReadStream(`${inputFolderPath}/${decodeURIComponent(photoPath)}`);
-        // console.log('inStr', inStr.path);
-        // const outStr = fs.createWriteStream(
-        //   `${outputFolderPath}/images/${photoPath.slice(photoPath.lastIndexOf('/') + 1)}`,
-        // );
-        // console.log('outStr', outStr.path);
+        // if url contains 'http' or 'https'
+        if (/^(?=.*?((\bhttp\b)|(\bhttps\b))).*$/.test(photoPath)) {
+          // Download image and save in 'output/images' folder
+          // TODO: Download image and save in /images folder
+          // https://stackoverflow.com/questions/12740659/downloading-images-with-node-js
+        } else {
+          const inStr = fs.createReadStream(`${inputFolderPath}/${decodeURIComponent(photoPath)}`);
+          const outStr = fs.createWriteStream(
+            `${outputFolderPath}/images/${photoPath.slice(photoPath.lastIndexOf('/') + 1)}`,
+          );
 
-        // inStr.pipe(outStr);
+          inStr.pipe(outStr);
+          outputPhotoPath = outStr.path;
+        }
       }
 
-      formattedRecords.push({
-        name,
-        profilePhoto: `${outputFolderPath}/images/${photoPath.slice(photoPath.lastIndexOf('/'))}`,
-      });
+      formattedRecords.push({ name, profilePhoto: outputPhotoPath });
     });
+
+    // create 'output' folder if not exists
+    if (!fs.existsSync(outputFolderPath)) {
+      fs.mkdirSync(outputFolderPath);
+    }
 
     fs.writeFile(`${outputFolderPath}/team-directory.json`, JSON.stringify(formattedRecords, null, 2), (err) => {
       if (err) {
