@@ -6,6 +6,7 @@
 // More info: https://www.npmjs.com/package/csvtojson
 
 const fs = require('fs');
+const axios = require('axios');
 const CSVToJSON = require('csvtojson');
 
 const inputFolderPath = `${__dirname}/input`;
@@ -59,9 +60,18 @@ CSVToJSON()
 
         // if url contains 'http' or 'https'
         if (/^(?=.*?((\bhttp\b)|(\bhttps\b))).*$/.test(photoPath)) {
-          // Download image and save in 'output/images' folder
-          // TODO: Download image and save in /images folder
-          // https://stackoverflow.com/questions/12740659/downloading-images-with-node-js
+          axios
+            .get(photoPath, { responseType: 'arraybuffer' })
+            .then(({ data }) => {
+              fs.writeFile(`${imagesDir}/${name.replace(' ', '_')}.jpg`, data, (error) => {
+                if (error) {
+                  console.log(error);
+                }
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         } else {
           const inStr = fs.createReadStream(`${inputFolderPath}/${decodeURIComponent(photoPath)}`);
           const outStr = fs.createWriteStream(
