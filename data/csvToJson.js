@@ -5,99 +5,68 @@
 
 // More info: https://www.npmjs.com/package/csvtojson
 
-const fs = require('fs');
-const axios = require('axios');
-const CSVToJSON = require('csvtojson');
+const func = async () => {
+  const fs = require('fs');
+  const csvToJson = require('csvtojson');
+  const { getCsvFileNames, getCommonPaths, getFormattedRecords, saveImage } = require('./helpers');
 
-const inputFolderPath = `${__dirname}/input`;
-const outputFolderPath = `${__dirname}/output`;
+  const { inputFolderPath, outputFolderPath, imagesDir } = getCommonPaths(__dirname);
 
-console.log('\x1b[36m%s\x1b[0m', 'Data file search...');
+  // create 'images' folder if not exists
+  if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir);
+  }
+  // create 'output' folder if not exists
+  if (!fs.existsSync(outputFolderPath)) {
+    fs.mkdirSync(outputFolderPath);
+  }
 
-const regex = /^(?=.*?\bTeam\b)(?=.*?\bDirectory\b).*$/;
-const fileNames = fs.readdirSync(inputFolderPath).filter((fn) => {
-  return fn.endsWith('.csv') && regex.test(fn);
-});
+  console.log('\x1b[36m%s\x1b[0m', 'Data file search...');
 
-if (!fileNames.length) {
-  console.log('\x1b[31m%s\x1b[0m', 'File not found!');
-  throw new Error('File not found!');
-}
+  const fileNames = getCsvFileNames(inputFolderPath);
 
-console.log('\x1b[32m%s\x1b[0m', `File found: ${fileNames[0]}`);
-console.log('\x1b[36m%s\x1b[0m', 'Data processing...');
+  if (!fileNames.length) {
+    console.log('\x1b[31m%s\x1b[0m', 'File not found!');
+    throw new Error('File not found!');
+  }
 
-CSVToJSON()
-  .fromFile(`${inputFolderPath}/${fileNames[0]}`)
-  .then((records) => {
-    if (!records || !records.length) {
-      console.log('\x1b[31m%s\x1b[0m', 'Records not found!');
-      throw new Error('Records not found!');
-    }
+  console.log('\x1b[32m%s\x1b[0m', `File found: ${fileNames[0]}`);
+  console.log('\x1b[36m%s\x1b[0m', 'Data processing...');
 
-    const formattedRecords = [];
+  const records = await csvToJson().fromFile(`${inputFolderPath}/${fileNames[0]}`);
 
-    records.forEach((item) => {
-      const name = item['Full name'];
-      let photoPath = item['Photo'];
+  if (!records || !records.length) {
+    console.log('\x1b[31m%s\x1b[0m', 'Records not found!');
+    throw new Error('Records not found!');
+  }
 
-      if (name === 'Employee') {
-        return;
-      }
+  let formattedRecords = getFormattedRecords(__dirname, records);
 
-      let outputPhotoPath = '';
-      if (photoPath) {
-        // if the user has several photos, get first one
-        if (photoPath.indexOf(',') >= 0) {
-          photoPath = photoPath.slice(0, photoPath.indexOf(','));
-        }
+  formattedRecords.forEach(async (record) => {
+    await saveImage(record);
+  });
 
-        // create 'images' folder if not exists
-        const imagesDir = `${outputFolderPath}/images`;
-        if (!fs.existsSync(imagesDir)) {
-          fs.mkdirSync(imagesDir);
-        }
-
-        // if url contains 'http' or 'https'
-        if (/^(?=.*?((\bhttp\b)|(\bhttps\b))).*$/.test(photoPath)) {
-          axios
-            .get(photoPath, { responseType: 'arraybuffer' })
-            .then(({ data }) => {
-              fs.writeFile(`${imagesDir}/${name.replace(' ', '_')}.jpg`, data, (error) => {
-                if (error) {
-                  console.log(error);
-                }
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          const inStr = fs.createReadStream(`${inputFolderPath}/${decodeURIComponent(photoPath)}`);
-          const outStr = fs.createWriteStream(
-            `${outputFolderPath}/images/${photoPath.slice(photoPath.lastIndexOf('/') + 1)}`,
-          );
-
-          inStr.pipe(outStr);
-          outputPhotoPath = outStr.path;
-        }
-      }
-
-      formattedRecords.push({ name, profilePhoto: outputPhotoPath });
-    });
-
-    // create 'output' folder if not exists
-    if (!fs.existsSync(outputFolderPath)) {
-      fs.mkdirSync(outputFolderPath);
-    }
-
-    fs.writeFile(`${outputFolderPath}/team-directory.json`, JSON.stringify(formattedRecords, null, 2), (err) => {
+  fs.writeFile(
+    `${outputFolderPath}/team-directory.json`,
+    JSON.stringify(
+      formattedRecords.map(({ name, photoPath }) => ({
+        name,
+        photoPath,
+      })),
+      null,
+      2,
+    ),
+    (err) => {
       if (err) {
         throw new Error(err);
       }
       console.log('\x1b[32m%s\x1b[0m', "Results are saved in a 'team-directory.json' file");
-    });
-  })
-  .catch((err) => {
-    throw new Error(err);
-  });
+    },
+  );
+};
+
+try {
+  func();
+} catch (error) {
+  console.log('\x1b[31m', error);
+}
