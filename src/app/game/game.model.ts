@@ -18,7 +18,7 @@ export interface Answer {
 
 export interface Question {
   id: number;
-  imgPath: string;
+  profilePhoto: string;
   answers: Answer[];
   correctAnswerId: number;
   chooseAnswerId: number;

@@ -16,8 +16,8 @@
   <div class="question-list">
     <div *ngFor="let question of result.questions" class="question">
       <div class="img-wrapper">
-        <img *ngIf="question.imgPath;else blankImg" [src]="question.imgPath"
-             [alt]="personType + ' picture'">
+        <img *ngIf="question.profilePhoto;else blankImg"
+             [src]="question.profilePhoto" [alt]="personType + ' picture'">
         <ng-template #blankImg>
           <mat-icon [inline]="true">sentiment_very_dissatisfied</mat-icon>
           <h1>No photo</h1>
